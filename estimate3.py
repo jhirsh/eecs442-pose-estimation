@@ -42,10 +42,16 @@ for j in [1,2,3]:
         time3_xy=time3[:,:,0:2]
         time3_xy=np.reshape(time3_xy,(25,2))
 
+        estimate = np.ndarray(shape=(25,2))
         ### Differential & estiamtion##################################################
-        for k in range(0,25):
-            dk_x=time1_x-time0_x
-            dk_y=time1_y-time0_y
+        for k in range(0,0):
+            p0 = time0_xy[k]
+            p1 = time1_xy[k]
+            p2 = time2_xy[k]
+            x = [p0[0], p1[0], p2[0]]
+            y = [p0[1], p1[1], p2[1]]
+            z = np.polyfit(x,y,3)
+            f = np.poly1d(z)
 
         dk=np.hstack((dk_x.T,dk_y.T))
         estimate=time1_xy+dk
