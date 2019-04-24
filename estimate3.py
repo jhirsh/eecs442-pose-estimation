@@ -1,15 +1,14 @@
 import numpy as np
+from numpy.polynomial import Polynomial as P
 import matplotlib.pyplot as plt 
 from scipy.spatial import distance
 import pandas as pd
 
 
 norms = []
-count = 0
 for j in [1,2,3]:
     key_points=np.load('body' + str(j) + '.npz')
     files = key_points.files
-    count = 0
     for i in range(len(files) - 4):
         ###time0 frame####################################################
         file0 = 'time'+str(i)
@@ -44,21 +43,35 @@ for j in [1,2,3]:
 
         estimate = np.ndarray(shape=(25,2))
         ### Differential & estiamtion##################################################
-        for k in range(0,0):
+        for k in range(0,24):
             p0 = time0_xy[k]
             p1 = time1_xy[k]
             p2 = time2_xy[k]
             x = [p0[0], p1[0], p2[0]]
             y = [p0[1], p1[1], p2[1]]
-            z = np.polyfit(x,y,3)
-            f = np.poly1d(z)
+            #print(x, y)
+            if x[0] == 0 or x[1] == 0 or x[2] == 0:
+                estimate[k] = [0,0]
+            else:
+                z = np.polyfit(x,y,3)
+                f = np.poly1d(z)
+                dx = x[2] - x[1]
+                x_n = x[2] + dx
+                #print(x_n, f(x_n))
+                estimate[k] = [x_n, f(x_n)] 
+                print(estimate[k])
+            plt.plot(x,y,'r+')
+            for lin in np.linspace(x_n-10,x_n+10,50):
+                plt.plot(lin,f(lin),'g+') 
+            plt.plot(time3_xy[k][0], time3_xy[k][1], 'ro')
+            plt.plot(estimate[k][0], estimate[k][1], 'b+')
+            plt.show()
+            '''
+            '''
 
-        dk=np.hstack((dk_x.T,dk_y.T))
-        estimate=time1_xy+dk
+        norms.append(np.linalg.norm(estimate - time3_xy))
 
-        norms.append(np.linalg.norm(estimate - time2_xy))
-        count += 1
-
+print(norms)
 # Plot Histogram
 fig, ax = plt.subplots()
 n, bins, patches = ax.hist(norms, 10, facecolor='blue', alpha=0.5)
