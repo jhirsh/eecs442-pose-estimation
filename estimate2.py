@@ -13,7 +13,7 @@ for j in [1,2,3]:
     for i in range(len(files) - 2):
         ###time0 frame####################################################
         file0 = 'time'+str(i)
-        file1 = 'time'+str(i+1)
+        file1 = 'time'+str(i+1)                         
         file2 = 'time'+str(i+2)
         time0=key_points[file0]
         time0_x=time0[:,:,0]
@@ -42,9 +42,12 @@ for j in [1,2,3]:
         time2=key_points[file2] #Actual pose in the next frame
 
         time2_xy=time2[:,:,0:2]
-        norms.append(np.linalg.norm(estimate - time2_xy))
         count += 1
+        # norms.append(np.linalg.norm(estimate - time2_xy))                 #Used for the plot w/o normalization                                                                                                          #Shifted here to handle the comment in the next line
+        norms.append(np.linalg.norm(estimate - time2_xy)/count)             #Used for plot with Normalization
+
 
 print(len(norms))
+# norms2=norms/len(norms)
 plt.hist(norms, 10, facecolor='blue', alpha=0.5)
 plt.show()
