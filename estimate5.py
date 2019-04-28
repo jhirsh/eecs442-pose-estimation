@@ -6,8 +6,8 @@ import pandas as pd
 
 
 norms = []
-for j in [1]:
-    key_points=np.load('body' + str(j) + '.npz')
+for j in [1,2,3,9,10,11,12,14]:
+    key_points=np.load('body' + str(j) + '_3fs/body' + str(j) + '_3fs.npz')
     files = key_points.files
     for i in range(len(files) - 6):
         ###time0 frame####################################################
@@ -137,7 +137,7 @@ for j in [1]:
 #### Chop off values >1000 assuming they're outliers(based on experiments) before plotting histogram
 norm_p=[]
 for i in range(len(norms)):
-    if norms[i]>1000:
+    if norms[i]>400:
         pass
     else:
         norm_p.append(norms[i])
@@ -151,14 +151,14 @@ n, bins, patches = ax.hist(norm_p, 50, facecolor='blue', alpha=0.5)
 m=max(n)
 title = 'Histogram of Estimation Accuracy'
 annotation1 = 'N =' + str(len(norm_p))
-ax.annotate(annotation1, (max(norm_p)-150, m-0.3), fontname='Times New Roman')
+ax.annotate(annotation1, (max(norm_p)-10, m-2), fontname='Times New Roman')
 annotation2 = 'Mean error = ' + str(mean)
-ax.annotate(annotation2, (max(norm_p)-150, m-0.5), fontname='Times New Roman')
+ax.annotate(annotation2, (max(norm_p)-10, m-4), fontname='Times New Roman')
 ax.set_title(title, fontname='Times New Roman')
 ax.set_xlabel('Euclidean Norm between Estimation and Ground Truth (Pixels)',fontname='Times New Roman', fontsize=10)
 ax.set_ylabel('Number of Estimations', fontname='Times New Roman', fontsize=10)
 description ='FPS:7, Frames:5, Order:2'
-fig.text(0.5, 0.001, description, ha='center', fontname='Times New Roman', fontsize=11)
+fig.text(0.5, 0.005, description, ha='center', fontname='Times New Roman', fontsize=11)
 plt.show()
 
 """ ##### Plot of error variation with order increase
