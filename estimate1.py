@@ -29,19 +29,20 @@ estimate=time1_xy+dk
 num=np.arange(25)
 time2=key_points['time2']
 time2_h=np.reshape(time2[:,:,0:2], (25,2))
-
+ 
+### Visualizing the estimate #################################################
 plt.scatter(estimate[:,0],estimate[:,1])
 plt.scatter(time2_h[:,0],time2_h[:,1])
 plt.plot(estimate[:,0],estimate[:,1], label='Our Estimate', marker='o', markerfacecolor='blue', markersize=7, color='skyblue', linewidth=2, zorder=1)
 plt.plot(time2_h[:,0],time2_h[:,1], label='Next Pose', marker='*', markerfacecolor='pink', markersize=7, color='k', linewidth=2, zorder=1)
 
-for i, t in enumerate(num):
+for i, t in enumerate(num):  ### Annotation for estimate
     # print(i)
     x=estimate[i,0]
     y=estimate[i,1]
     plt.annotate(t,(x,y))
 
-for i, t in enumerate(num):
+for i, t in enumerate(num):  ### Annotation for ground truth
     # print(i)
     x=time2_h[i,0]
     y=time2_h[i,1]
