@@ -1,7 +1,8 @@
 # EECS 442 - Introduction to Computer Vision Final Project
-## University of Michigan - Shruti Ambekar, Jonas Hirshland {ashruti, jhirshey}@umich.edu
+### University of Michigan - Shruti Ambekar, Jonas Hirshland {ashruti, jhirshey}@umich.edu
 
-# Estimating Figure Trajectory using OpenPose
+## Estimating Figure Trajectory using OpenPose
+
 
 [Report](final_paper.pdf)
 
